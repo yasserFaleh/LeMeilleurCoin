@@ -1,6 +1,8 @@
 package fr.emse.spring.lemeilleurcoin.model;
 
+import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 public class Offer {
@@ -12,11 +14,18 @@ public class Offer {
     private String title;
 
     @Column(nullable = false)
-    private String description;
+    private Double price;
 
     @Column(nullable = false)
+    private String description;
+
+    @Column(nullable = true)
     @Enumerated(EnumType.STRING)
     private OfferStatus offerStatus;
+
+    @Column(nullable = false)
+    @CreationTimestamp
+    private Date date;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
@@ -28,9 +37,10 @@ public class Offer {
     public Offer() {
     }
 
-    public Offer(Long id, String title, String description, OfferStatus offerStatus, Category category, User user) {
-        this.id = id;
+    public Offer( String title,Double price , String description,Date date, OfferStatus offerStatus, Category category, User user) {
         this.title = title;
+        this.date = date;
+        this.price = price;
         this.description = description;
         this.offerStatus = offerStatus;
         this.category = category;
@@ -39,6 +49,22 @@ public class Offer {
 
     public Long getId() {
         return id;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public void setId(Long id) {

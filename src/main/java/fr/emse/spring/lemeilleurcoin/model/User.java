@@ -6,7 +6,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import java.util.Set;
 
-@Entity
+@Entity(name="RUSER")
 public class User {
     @Id
     private String email;
