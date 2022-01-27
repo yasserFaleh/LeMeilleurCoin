@@ -37,7 +37,7 @@ public class ProductController {
      * @param order
      * @return List<ProductDto>
      */
-    @CrossOrigin(origins = "http://localhost:8080")
+    @CrossOrigin
     @GetMapping("/{category}")
     List<ProductDto> getProductsByCategoryAndTitle(@RequestParam (name="title",defaultValue = "")String title,@PathVariable Category category, @RequestParam(required = false,name="order",defaultValue = "desc") String order){
         if ( "ASC".equals(order) )
@@ -45,7 +45,7 @@ public class ProductController {
 
         return productDao.findAllByCategoryOrderByDateDesc(category).stream().map(ProductDto::new).collect(Collectors.toList());
     }
-    @CrossOrigin(origins = "http://localhost:8080")
+    @CrossOrigin
     @GetMapping("/all")
     List<ProductDto> getProductsByTitle(@RequestParam (name="title",defaultValue = "")String title,@RequestParam (required = false,name="category")Category category ){
         if ( category == null){
@@ -54,7 +54,7 @@ public class ProductController {
             return productDao.findAllByTitleByCategory(category,title).stream().map(ProductDto::new).collect(Collectors.toList());
         }
     }
-    @CrossOrigin(origins = "http://localhost:8080")
+    @CrossOrigin
     @PostMapping("create")
     public ProductDto create(@RequestBody ProductDto odto){
         Product product = null;
@@ -76,7 +76,7 @@ public class ProductController {
 
         return new ProductDto(product);
     }
-    @CrossOrigin(origins = "http://localhost:8080")
+    @CrossOrigin
     @DeleteMapping("/{id}")
     public Boolean delete(@RequestParam(name = "pass",defaultValue = "") String pass,@PathVariable(name = "id") Long id){
         if ( "".equals(pass)   )
@@ -91,12 +91,12 @@ public class ProductController {
             return true;
         }
     }
-    @CrossOrigin(origins = "http://localhost:8080")
+    @CrossOrigin
     @GetMapping("/own/{email}")
     public List<ProductDto> getOffersByEmail(@PathVariable("email") String email){
         return productDao.findAllByUser(email).stream().map(ProductDto::new).collect(Collectors.toList());
     }
-    @CrossOrigin(origins = "http://localhost:8080")
+    @CrossOrigin
     @GetMapping("/product/{id}")
     public ProductDto get(@PathVariable("id") Long id){
         Product product = productDao.getById(id);
@@ -104,7 +104,7 @@ public class ProductController {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Not found");
         return new ProductDto(product);
     }
-    @CrossOrigin(origins = "http://localhost:8080")
+    @CrossOrigin
     @PostMapping("modify")
     public ProductDto modify(@RequestParam("pass")String pass ,@RequestBody ProductDto odto){
         System.out.println(pass+ " "+ odto);
